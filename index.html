@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		body{margin:0;
+			background: black;}
+		#star{display: none;
+			position: absolute;}
+		.starClone{ position: absolute;
+			left:0;
+			top:0;
+			right: 0;
+			bottom: 0;
+			width:50px;
+			height:50px;
+			}
+		h1{color: yellow;
+			opacity: 0.2;
+			text-shadow: 0 0 0;
+			transform: translate(50%,50%);
+			}
+
+
+	</style>
+</head>
+<body id="mybody">
+<h1 id="star">★</h1>
+
+<script type="text/javascript">
+
+	var starArray = [];
+
+	var t = document.getElementById("star");
+	for(var i=0; i<300; i++){
+		var n = t.cloneNode(true);
+		n.style.display = "block";
+		n.className = "starClone";
+		n.id = "s" + i;
+		n.style.color = makeColor();
+		n.style.textShadow = "0 0 3px white";
+		n.style.translate= Math.random();
+		n.style.left = Math.random()*1000 + "px";
+		n.style.top = Math.random()*5400 + "px";
+		n.addEventListener("mouseover", myFunction);
+		document.body.appendChild(n);	
+	}
+	
+	function myFunction(){
+		this.style.left = event.clientX;
+		this.style.top = event.clientY;
+		this.style.opacity = "1";
+		console.log(event.clientX);
+		console.log(event.clientY);
+		starArray.push(event.target.id);
+		this.removeEventListener("mouseover", myFunction);
+		console.log(starArray);
+	}
+	
+	function makeColor(){
+		var rr = Math.random()*255;
+		var gg = Math.random()*255;
+		var bb = Math.random()*255;
+		var tt = "rgb(" + rr + "," + gg + "," + bb + ")";
+		return tt;
+		}
+
+
+	window.onmousemove = function(){
+		for(var i=0; i<starArray.length; i++){
+			var t = document.getElementById(starArray[i]);
+			t.style.left = (event.pageX + Math.random()*10) + "px";
+			t.style.top = (event.pageY + Math.random()*10) + "px";
+		}
+	}
+</script>
+</body>
+</html>
